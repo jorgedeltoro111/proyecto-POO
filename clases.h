@@ -1,6 +1,14 @@
 #ifndef CLASES_H
 #define CLASES_H
+#ifdef _WIN32
+#define CLEAR "cls"
+#elif defined(unix) || defined(__unix__) || defined(__unix) || defined(__APPLE__) || (__MACH__)
+#define CLEAR "clear"
+#else
+#error "S0 no soportado para limpiar pantalla"
+#endif
 #include<iostream>
+#include<vector>
 using namespace std;
 
 extern int totalCuentas;
@@ -8,16 +16,16 @@ extern int totalCuentas;
 void continuar(){
     cout<<"Presione entrar para continuar . . ."<<endl;
     cin.get();
-    system("cls");
+    system(CLEAR);
 }
 
 class Usuario{
     private:
         string nombreCompleto;
         int edad;
-        long long int telefono;
+        string telefono;
     public:
-        Usuario(string nombre, int edad, long long int telefono){
+        Usuario(string nombre, int edad, string telefono){
             this->nombreCompleto = nombre;
             this->edad = edad;
             this->telefono = telefono;
@@ -34,7 +42,7 @@ class Usuario{
         int getEdad(){
             return this->edad;
         }
-        long long int getTelefono(){
+        string getTelefono(){
             return this->telefono;
         }
 };
@@ -81,7 +89,7 @@ class CuentaDebito : protected Cuenta{
         void informacionCuenta(){
             const string nombre = this->titular.getNombre();
             const int edad = this->titular.getEdad();
-            const long long int telefono = this->titular.getTelefono();
+            const string telefono = this->titular.getTelefono();
             cout<<"---Cuenta de "<<nombre<<"---"<<endl;
             cout<<"Tipo: Debito"<<endl;
             cout<<"Numero de cuenta: "<<this->numeroCuenta<<endl;
@@ -125,7 +133,7 @@ class CuentaCredito : protected Cuenta{
         void informacionCuenta(){
             const string nombre = this->titular.getNombre();
             const int edad = this->titular.getEdad();
-            const long long int telefono = this->titular.getTelefono();
+            const string telefono = this->titular.getTelefono();
             cout<<"---Cuenta de "<<nombre<<"---"<<endl;
             cout<<"Tipo: Credito"<<endl;
             cout<<"N.Cuenta: "<<this->numeroCuenta<<endl;
@@ -135,13 +143,88 @@ class CuentaCredito : protected Cuenta{
             continuar();
         }
 };
-
+/**---menu principal---
+ * 1-iniciar sesion
+ * 2-crear cuenta de credito 
+ * 3-crear cuenta de debito
+ * 4-salir
+*/
+/**---submenu de la opcion 1---
+ * 1
+*/
 
 class Banco{
     private:
-        Cuenta* cabeza;
+        vector<CuentaDebito*> cuentasDebito;
+        vector<CuentaCredito*> cuentasCredito;
+    public:
+        Usuario* crearUsuario(){
+            string nombre; 
+            int edad; 
+            string telefono;
+            cout<<"---Datos Usuario---"<<endl;
+            cout<<"Ingrese el nombre del titular: ";
+            cin>>nombre;
+            cin.ignore();
+            cout<<"Ingrese la edad del titular: ";
+            cin>>edad;
+            cin.ignore();
+            cout<<"Ingrese el telefono del titular: ";
+            cin>>telefono;
+            cin.ignore();
+            Usuario* nuevo = new nuevo(string nombre, int edad, string telefono);
+
+            return nuevo;
+        }
+        void crearCuentaDebito(){
+            int nip;
+            Usuario* nuevo = this->crearUsuario();
+            cout<<"---Datos de Cuenta---"<<endl;
+            cout<<"Cree un nuevo nip: ";
+            cin>>nip;
+            CuentaDebito* nueva = new CuentaDebito(nip, nuevo);
+            this->cuentasDebito.push_back(nueva);
+            continuar();
+        }
+        void crearCuentaCredito(){
+            int nip;
+            Usuario* nuevo = this->crearUsuario();
+            cout<<"---Datos de Cuenta---"<<endl;
+            cout<<"Cree un nuevo nip: ";
+            cin>>nip;
+            CuentaCredito* nueva = new CuentaCredito(nip, nuevo);
+            this->crearCuentaCredito.push_back(nueva); 
+            continuar();
+        }
+        void iniciarSesion(){
+            bool band = true;
+            string nombre;
+            int nip;
+            cout<<"---Inicio de sesion---"<<endl;
+            cout<<"Usuario: ";
+            cin>>nombre;
+            cin.ignore();
+            cout<<"Nip: ";
+            cin>>nip;
+            cin.ignore();
+            for(int i=0; i<this->cuentasCredito; i++){
+                if(nombre == this->cuentasCredito[i] && nip == this->cuentasCredito[i]){
+                    //submenu
+                }else if(nombre == this->cuentasDebito[i] && nip == this->cuentasDebito[i]){
+                    //submenu
+                }
+            }
+            if(band){
+                cout<<"El usuario ingresado no tiene cuenta actualmete."<<endl;
+                continuar();
+            }
+
+        }
+
 
 };
+
+
 
 
 #endif
