@@ -18,6 +18,13 @@ const int CREAR_CUENTA_DEBITO = 2;
 const int CREAR_CUENTA_CREDITO = 3;
 const int SALIR = 4;
 const int REALIZAR_COMPRA = 5;
+<<<<<<< HEAD
+const int REALIZAR_PAGO = 6;
+const int INFORMACION_CUENTA = 7;
+const int DEPOSITAR = 8;
+const int RETIRAR = 9;
+const int EXIT = 0;
+=======
 const int REALIZAR_PAGO = 6; 
 const int INFORMACION_CUENTA = 7;
 const int DEPOSITAR = 8; 
@@ -26,6 +33,7 @@ const int EXIT = 0;
 
 
 
+>>>>>>> e0d5ec9fe161c1669e4797bc27b4d5fe2808f653
 
 class Usuario{
     private:
@@ -95,9 +103,20 @@ class CuentaDebito : public Cuenta{
         void retirarDinero(float monto){
             system(CLEAR);
             fflush(stdin);
+<<<<<<< HEAD
+            if(monto <= saldo) {
+                string nombre = this->titular.getNombre();
+                this->saldo -= monto;
+                cout<<"Se han retirado $"<<monto<<" pesos a la cuenta de "<<nombre<<endl;
+            }
+            else {
+                cout<<"El dinero que estas intentando retirar supera tu saldo"<<endl;
+            }
+=======
             string nombre = this->titular.getNombre();
             this->saldo -= monto;
             cout<<"Se han retirado $"<<monto<<" pesos a la cuenta de "<<nombre<<endl;
+>>>>>>> e0d5ec9fe161c1669e4797bc27b4d5fe2808f653
             continuar();
         }
         void depositarDinero(float monto){
@@ -145,7 +164,11 @@ class CuentaCredito : public Cuenta{
             this->fechaCorte = 26;
             this->fechaLimite = 5;
         }
+<<<<<<< HEAD
+        void saldoAPagar(){
+=======
         void saldoAPagar(){ 
+>>>>>>> e0d5ec9fe161c1669e4797bc27b4d5fe2808f653
             system(CLEAR);
             cout<<"---Saldo actual---"<<endl;
             cout<<"Saldo a pagar en la proxima fecha de limite es: "<<this->deuda<<endl;
@@ -154,15 +177,37 @@ class CuentaCredito : public Cuenta{
         void realizarCompra(float monto, string concepto){
             system(CLEAR);
             fflush(stdin);
+<<<<<<< HEAD
+            if(deuda + monto <= limite) {
+                this->concepto = concepto;
+                this->deuda += monto;
+                cout<<"Compra de "<<concepto<<" - $"<<monto<<" pesos realizada correctamente"<<endl;
+            }
+            else {
+                cout<<"Lo siento, la compra que estas intentando realizar excede el limite de tu cuenta de credito."<<endl;
+            }
+=======
             this->concepto = concepto;
             this->deuda += monto;
             cout<<"Compra de "<<concepto<<" - $"<<monto<<" pesos realizada correctamente"<<endl;
+>>>>>>> e0d5ec9fe161c1669e4797bc27b4d5fe2808f653
             continuar();
         }
         void realizarPago(float monto){
             system(CLEAR);
+<<<<<<< HEAD
+            fflush(stdin);
+            if(monto <= deuda) {
+                this->deuda -= monto;
+                cout<<"Pago de $"<<monto<<" pesos realizado correctamente"<<endl;
+            }
+            else {
+                cout<<"Error, estas intentando pagar mas de lo que debes."<<endl;
+            }
+=======
             this->deuda -= monto;
             cout<<"Pago de $"<<monto<<" pesos realizado correctamente"<<endl;
+>>>>>>> e0d5ec9fe161c1669e4797bc27b4d5fe2808f653
             continuar();
         }
         void informacionCuenta(){
@@ -225,8 +270,13 @@ class Banco{
         }
         Usuario crearUsuario(){
             system(CLEAR);
+<<<<<<< HEAD
+            string nombre;
+            int edad;
+=======
             string nombre; 
             int edad; 
+>>>>>>> e0d5ec9fe161c1669e4797bc27b4d5fe2808f653
             string telefono;
             cout<<"---Datos Usuario---"<<endl;
             cout<<"Ingrese el nombre del titular: ";
@@ -261,7 +311,11 @@ class Banco{
             cin>>nip;
             fflush(stdin);
             CuentaCredito nueva = CuentaCredito(nip, nuevo);
+<<<<<<< HEAD
+            this->cuentasCredito.push_back(nueva);
+=======
             this->cuentasCredito.push_back(nueva); 
+>>>>>>> e0d5ec9fe161c1669e4797bc27b4d5fe2808f653
             continuar();
         }
         void iniciarSesion() {
@@ -401,7 +455,10 @@ class Banco{
 }
 };
 
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> e0d5ec9fe161c1669e4797bc27b4d5fe2808f653
 #endif
